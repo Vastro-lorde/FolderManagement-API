@@ -13,17 +13,17 @@ public class FileController : ControllerBase
     }
 
     [HttpPost("UploadFile")]
-    public async Task<IActionResult> UploadFile(IFormFile file, string? FolderPath)
+    public IActionResult UploadFile(IFormFile file, string? FolderPath)
     {
         try
         {
             string siteHost = (HttpContext.Request.IsHttps? "https": "http")+ "://" + HttpContext.Request.Host;
             if (FolderPath == null)
             {
-                await file.CopyToAsync(new FileStream(rootPath, FileMode.Create, FileAccess.ReadWrite));
+                file.CopyTo(new FileStream(rootPath, FileMode.Create, FileAccess.Write));
                 return Ok("File created at: " + Path.Combine(rootPath,file.Name) );
             }
-            await file.CopyToAsync(new FileStream(Path.Combine(rootPath,FolderPath), FileMode.Create, FileAccess.ReadWrite));
+            file.CopyTo(new FileStream(Path.Combine(rootPath,FolderPath), FileMode.Create, FileAccess.Write));
             return Ok("File created at: " + Path.Combine(rootPath,FolderPath,file.Name) );
         }
         catch (Exception ex)

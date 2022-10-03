@@ -15,10 +15,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseFileServer(new FileServerOptions{
-    EnableDefaultFiles = true,
-    EnableDirectoryBrowsing = true
-});
+
+// app.UseFileServer(new FileServerOptions{
+//     EnableDefaultFiles = true,
+//     EnableDirectoryBrowsing = true,
+//     RequestPath = Environment.CurrentDirectory+"/public"
+// });
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
